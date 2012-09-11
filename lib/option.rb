@@ -17,7 +17,7 @@ class SomeClass
   end
 
   def foreach(&blk)
-    blk.call(get)
+    flat_map(&blk)
 
     nil
   end
@@ -38,8 +38,8 @@ class SomeClass
     blk.call(get)
   end
 
-  def exists(&blk)
-    !! blk.call(get)
+  def exists?(&blk)
+    !! flat_map(&blk)
   end
 
   def ==(that)
@@ -81,12 +81,12 @@ class NoneClass
     self
   end
 
-  def exists(&blk)
+  def exists?(&blk)
     false
   end
 
   def ==(that)
-    self.class == self.class
+    self.or_nil == self.or_nil
   end
 end
 
