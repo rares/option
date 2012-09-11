@@ -104,6 +104,14 @@ describe SomeClass do
     Some(value).flat_map { |v| v * 2 }.must_equal(24)
   end
 
+  it "#flat_map should return an Option value from the block" do
+    Some(value).flat_map { |v| Option(v * 2) }.must_equal(Some(24))
+  end
+
+  it "#flat_map can return None from the block" do
+    Some(value).flat_map { |_| None }.must_equal(None)
+  end
+
   it "#exists? should return true when the block evaluates true" do
     Some(value).exists? { |v| v % 2 == 0 }.must_equal(true)
   end
