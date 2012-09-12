@@ -54,6 +54,10 @@ describe NoneClass do
   it "#exists? should return false" do
     None.exists? {}.must_equal(false)
   end
+
+  it "#fold should invoke the default proc" do
+    None.fold(proc { value }) { |v| v.to_f }.must_equal(value)
+  end
 end
 
 describe SomeClass do
@@ -100,8 +104,8 @@ describe SomeClass do
     Some(value).map { |v| v * 2 }.must_equal(Some(24))
   end
 
-  it "#flat_map should return the result of the proc over the value" do
-    Some(value).flat_map { |v| v * 2 }.must_equal(24)
+  it "#flat_map should raise TypeError if the returned value is not an Option" do
+    lambda { Some(value).flat_map { |v| v * 2 } }.must_raise TypeError
   end
 
   it "#flat_map should return an Option value from the block" do
@@ -118,6 +122,10 @@ describe SomeClass do
 
   it "#exists? should return false when the block evaluates false" do
     Some(value).exists? { |v| v % 2 != 0 }.must_equal(false)
+  end
+
+  it "#fold should map the proc over the value and return it" do
+    Some(value).fold(proc { value * 2 }) { |v| v * 3 }.must_equal(36)
   end
 end
 

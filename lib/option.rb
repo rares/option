@@ -1,4 +1,14 @@
-class SomeClass
+class OptionClass
+
+  def or_nil
+  end
+
+  def ==(that)
+    or_nil == that.or_nil
+  end
+end
+
+class SomeClass < OptionClass
 
   def initialize(value)
     @value = value
@@ -17,7 +27,7 @@ class SomeClass
   end
 
   def foreach(&blk)
-    flat_map(&blk)
+    blk.call(get)
 
     nil
   end
@@ -31,23 +41,27 @@ class SomeClass
   end
 
   def map(&blk)
-    Option(flat_map(&blk))
+    Option(blk.call(get))
   end
 
   def flat_map(&blk)
+    result = blk.call(get)
+    case result
+      when OptionClass then return result
+      else raise TypeError, "Must be Option"
+    end
+  end
+
+  def fold(if_empty, &blk)
     blk.call(get)
   end
 
   def exists?(&blk)
-    !! flat_map(&blk)
-  end
-
-  def ==(that)
-    or_nil == that.or_nil
+    !! blk.call(get)
   end
 end
 
-class NoneClass
+class NoneClass < OptionClass
 
   def to_a
     []
@@ -81,12 +95,12 @@ class NoneClass
     self
   end
 
-  def exists?(&blk)
-    false
+  def fold(if_empty, &blk)
+    if_empty.call
   end
 
-  def ==(that)
-    self.or_nil == self.or_nil
+  def exists?(&blk)
+    false
   end
 end
 
