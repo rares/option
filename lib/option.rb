@@ -104,8 +104,9 @@ class NoneClass < OptionClass
   end
 end
 
-None = NoneClass.new
-Some = SomeClass
+Option = OptionClass
+None   = NoneClass.new
+Some   = SomeClass
 
 def Some(value)
   Some.new(value)
