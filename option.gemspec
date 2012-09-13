@@ -16,6 +16,5 @@ Gem::Specification.new do |gem|
   gem.version       = Option::VERSION
 
   gem.add_development_dependency "rake",     "= 0.9.2.2"
-  gem.add_development_dependency "rr",       "= 1.0.4"
   gem.add_development_dependency "minitest", "= 3.4.0"
 end
