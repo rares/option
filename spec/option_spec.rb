@@ -58,9 +58,13 @@ describe NoneClass do
   it "#fold should invoke the default proc" do
     None.fold(proc { value }) { |v| v.to_f }.must_equal(value)
   end
+
+  it "should be aliased to None" do
+    None.must_be_instance_of(NoneClass)
+  end
 end
 
-describe SomeClass do
+describe Some do
 
   it "#to_a returns the value wrapped in an array" do
     Some(value).to_a.must_equal([value])
@@ -127,23 +131,9 @@ describe SomeClass do
   it "#fold should map the proc over the value and return it" do
     Some(value).fold(proc { value * 2 }) { |v| v * 3 }.must_equal(36)
   end
-end
 
-describe "Option" do
-
-  it "must return a some if the passed value is not nil" do
-    Option(value).must_equal(Some(value))
-  end
-
-  it "must return a None if the passed value is nil" do
-    Option(nil).must_equal(None)
-  end
-end
-
-describe "Some" do
-
-  it "should be aliased to SomeClass" do
-    Some.must_equal(SomeClass)
+  it "should be aliased to Some" do
+    Some.must_equal(Some)
   end
 
   it "should wrap the creation of a Some" do
@@ -155,9 +145,13 @@ describe "Some" do
   end
 end
 
-describe "None" do
+describe Option do
 
-  it "should be aliased to NoneClass" do
-    None.must_be_instance_of(NoneClass)
+  it "must return a some if the passed value is not nil" do
+    Option(value).must_equal(Some(value))
+  end
+
+  it "must return a None if the passed value is nil" do
+    Option(nil).must_equal(None)
   end
 end
