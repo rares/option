@@ -64,7 +64,7 @@ describe NoneClass do
   end
 end
 
-describe Some do
+describe SomeClass do
 
   it "#to_a returns the value wrapped in an array" do
     Some(value).to_a.must_equal([value])
@@ -132,12 +132,8 @@ describe Some do
     Some(value).fold(proc { value * 2 }) { |v| v * 3 }.must_equal(36)
   end
 
-  it "should be aliased to Some" do
-    Some.must_equal(Some)
-  end
-
   it "should wrap the creation of a Some" do
-    mock(Some).new(value)
+    mock(SomeClass).new(value)
 
     Some(value)
 
@@ -145,7 +141,7 @@ describe Some do
   end
 end
 
-describe Option do
+describe OptionClass do
 
   it "must return a some if the passed value is not nil" do
     Option(value).must_equal(Some(value))

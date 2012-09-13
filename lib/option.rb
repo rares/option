@@ -1,4 +1,4 @@
-class Option
+class OptionClass
 
   def or_nil
   end
@@ -8,7 +8,7 @@ class Option
   end
 end
 
-class Some < Option
+class SomeClass < OptionClass
 
   def initialize(value)
     @value = value
@@ -47,7 +47,7 @@ class Some < Option
   def flat_map(&blk)
     result = blk.call(get)
     case result
-      when Option then return result
+      when OptionClass then return result
       else raise TypeError, "Must be Option"
     end
   end
@@ -61,7 +61,7 @@ class Some < Option
   end
 end
 
-class NoneClass < Option
+class NoneClass < OptionClass
 
   def to_a
     []
@@ -107,7 +107,7 @@ end
 None = NoneClass.new
 
 def Some(value)
-  Some.new(value)
+  SomeClass.new(value)
 end
 
 def Option(value)
