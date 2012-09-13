@@ -1,12 +1,7 @@
 require "minitest/autorun"
 require "minitest/spec"
 
-require "rr"
-require "rr/adapters/rr_methods"
-
 require "option"
-
-include RR::Adapters::RRMethods
 
 def value
   12
@@ -27,12 +22,10 @@ describe NoneClass do
   end
 
   it "#foreach does not execute the block" do
-    blk = proc {}
-    dont_allow(blk).call
+    expected = nil
+    None.foreach { |v| expected = v }
 
-    None.foreach(&blk)
-
-    RR.verify
+    expected.must_be_nil
   end
 
   it "#or_nil should return nil" do
@@ -75,12 +68,10 @@ describe SomeClass do
   end
 
   it "#get_or_else does not execute the block;" do
-    blk = proc { value }
-    dont_allow(blk).call
+    expected = nil
+    Some(value).get_or_else { expected = true }
 
-    Some(value).get_or_else(&blk)
-
-    RR.verify
+    expected.must_be_nil
   end
 
   it "#get_or_else returns the value" do
@@ -88,12 +79,10 @@ describe SomeClass do
   end
 
   it "#foreach executes the block passing the inner value" do
-    blk = proc {}
-    mock(blk).call(value)
+    expected = nil
+    Some(value).foreach { |v| expected = v }
 
-    Some(value).foreach(&blk)
-
-    RR.verify
+    expected.must_equal(value)
   end
 
   it "#or_nil should return the inner value" do
@@ -133,11 +122,7 @@ describe SomeClass do
   end
 
   it "should wrap the creation of a Some" do
-    mock(SomeClass).new(value)
-
-    Some(value)
-
-    RR.verify
+    Some(value).must_be_instance_of(SomeClass)
   end
 end
 
