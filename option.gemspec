@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["rob.ares@gmail.com"]
   gem.description   = %q{Ruby port of Scala's Option Monad}
   gem.summary       = %q{Option attempts to be faithful to the useful parts of the scala api. We lose the type safety but still is quite useful when dealing with optional values.}
-  gem.homepage      = "http://www.robares.com/"
+  gem.homepage      = "http://www.github.com/rares/option"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
