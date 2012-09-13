@@ -53,6 +53,9 @@ foo.map { |v| v * 2 }.map { |v| v.upcase }.get_or_else { "missing" } #=> BARBAR
 None.fold(-> { "missing" }) { |v| v.upcase } #=> missing
 ```
 
+## Build Status
+![http://travis-ci.org/rares/option](https://secure.travis-ci.org/rares/option.png)
+
 ## Contributing
 
 1. Fork it
