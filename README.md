@@ -54,7 +54,7 @@ None.fold(-> { "missing" }) { |v| v.upcase } #=> missing
 ```
 
 ## Build Status
-![http://travis-ci.org/rares/option](https://secure.travis-ci.org/rares/option.png)
+<a href="http://travis-ci.org/rares/option">![http://travis-ci.org/rares/option](https://secure.travis-ci.org/rares/option.png)</a>
 
 ## Contributing
 
