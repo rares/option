@@ -124,6 +124,10 @@ describe SomeClass do
   it "should wrap the creation of a Some" do
     Some(value).must_be_instance_of(SomeClass)
   end
+
+  it "should be aliased to Some" do
+    Some.new(value).must_equal(Some(value))
+  end
 end
 
 describe OptionClass do
