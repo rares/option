@@ -36,7 +36,7 @@ class SomeClass < OptionClass
     get
   end
 
-  def defined?
+  def present?
     true
   end
 
@@ -87,7 +87,7 @@ class NoneClass < OptionClass
     nil
   end
 
-  def defined?
+  def present?
     false
   end
 

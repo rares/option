@@ -32,8 +32,8 @@ describe NoneClass do
     None.or_nil.must_be_nil
   end
 
-  it "#defined? should be false" do
-    None.defined?.must_equal(false)
+  it "#present? should be false" do
+    None.present?.must_equal(false)
   end
 
   it "#empty? should be true" do
@@ -93,8 +93,8 @@ describe SomeClass do
     Some(value).or_nil.must_equal(value)
   end
 
-  it "#defined? should be true" do
-    Some(value).defined?.must_equal(true)
+  it "#present? should be true" do
+    Some(value).present?.must_equal(true)
   end
 
   it "#empty? should be false" do
