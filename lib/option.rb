@@ -52,7 +52,7 @@ class SomeClass < OptionClass
     result = blk.call(get)
     case result
       when OptionClass then return result
-      else raise TypeError, "Must be Option"
+      else raise TypeError, "Must be an Option"
     end
   end
 
