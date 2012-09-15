@@ -36,6 +36,10 @@ class SomeClass < OptionClass
     get
   end
 
+  def defined?
+    true
+  end
+
   def empty?
     false
   end
@@ -81,6 +85,10 @@ class NoneClass < OptionClass
 
   def or_nil
     nil
+  end
+
+  def defined?
+    false
   end
 
   def empty?

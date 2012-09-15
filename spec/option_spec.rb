@@ -32,6 +32,10 @@ describe NoneClass do
     None.or_nil.must_be_nil
   end
 
+  it "#defined? should be false" do
+    None.defined?.must_equal(false)
+  end
+
   it "#empty? should be true" do
     None.empty?.must_equal(true)
   end
@@ -87,6 +91,10 @@ describe SomeClass do
 
   it "#or_nil should return the inner value" do
     Some(value).or_nil.must_equal(value)
+  end
+
+  it "#defined? should be true" do
+    Some(value).defined?.must_equal(true)
   end
 
   it "#empty? should be false" do
