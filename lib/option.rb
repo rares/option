@@ -63,6 +63,10 @@ class SomeClass < OptionClass
   def exists?(&blk)
     !! blk.call(get)
   end
+
+  def filter(&blk)
+    exists?(&blk) ? self : None
+  end
 end
 
 class NoneClass < OptionClass
@@ -109,6 +113,10 @@ class NoneClass < OptionClass
 
   def exists?(&blk)
     false
+  end
+
+  def filter(&blk)
+    self
   end
 end
 

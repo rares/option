@@ -51,6 +51,9 @@ foo.map { |v| v * 2 }.map { |v| v.upcase }.get_or_else { "missing" } #=> BARBAR
 
 # attempt to extract a value but default if None
 None.fold(-> { "missing" }) { |v| v.upcase } #=> missing
+
+# filter values returning an option
+foo.filter { |v| v == "baz" } #=> None
 ```
 
 ## Build Status

@@ -56,6 +56,14 @@ describe NoneClass do
     None.fold(proc { value }) { |v| v.to_f }.must_equal(value)
   end
 
+  it "#filter with a true predicate returns itself" do
+    Option(value).filter { |i| i == 12 }.must_equal(Option(value))
+  end
+
+  it "#filter with a false predicate returns None" do
+    Option(value).filter { |i| i == 1 }.must_equal(None)
+  end
+
   it "should be aliased to None" do
     None.must_be_instance_of(NoneClass)
   end
@@ -127,6 +135,10 @@ describe SomeClass do
 
   it "#fold should map the proc over the value and return it" do
     Some(value).fold(proc { value * 2 }) { |v| v * 3 }.must_equal(36)
+  end
+
+  it "#filter should return itself" do
+    None.filter { |i| i == 0 }.must_equal(None)
   end
 
   it "should wrap the creation of a Some" do
