@@ -21,9 +21,9 @@ describe NoneClass do
     None.get_or_else { "Some" }.must_equal "Some"
   end
 
-  it "#foreach does not execute the block" do
+  it "#each does not execute the block" do
     expected = nil
-    None.foreach { |v| expected = v }
+    None.each { |v| expected = v }
 
     expected.must_be_nil
   end
@@ -90,9 +90,9 @@ describe SomeClass do
     Some(value).get_or_else { }.must_equal(value)
   end
 
-  it "#foreach executes the block passing the inner value" do
+  it "#each executes the block passing the inner value" do
     expected = nil
-    Some(value).foreach { |v| expected = v }
+    Some(value).each { |v| expected = v }
 
     expected.must_equal(value)
   end

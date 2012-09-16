@@ -29,7 +29,7 @@ class SomeClass < OptionClass
     get
   end
 
-  def foreach(&blk)
+  def each(&blk)
     blk.call(get)
 
     nil
@@ -86,7 +86,7 @@ class NoneClass < OptionClass
     blk.call
   end
 
-  def foreach(&blk)
+  def each(&blk)
     nil
   end
 
