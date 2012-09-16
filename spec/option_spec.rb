@@ -159,4 +159,8 @@ describe OptionClass do
   it "must return a None if the passed value is nil" do
     Option(nil).must_equal(None)
   end
+
+  it "should do equality checks against the boxed value" do
+    Option(value).must_equal(value)
+  end
 end

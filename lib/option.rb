@@ -4,7 +4,10 @@ class OptionClass
   end
 
   def ==(that)
-    or_nil == that.or_nil
+    case that
+      when OptionClass then or_nil == that.or_nil
+      else or_nil == that
+    end
   end
 end
 
