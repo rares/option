@@ -67,6 +67,12 @@ describe NoneClass do
   it "should be aliased to None" do
     None.must_be_instance_of(NoneClass)
   end
+
+  it "#inside should return itself without invoking the block" do
+    expected = nil
+    None.inside { |v| expected = value }
+    expected.must_be_nil
+  end
 end
 
 describe SomeClass do
@@ -139,6 +145,12 @@ describe SomeClass do
 
   it "#filter should return itself" do
     None.filter { |i| i == 0 }.must_equal(None)
+  end
+
+  it "#inside should invoke the proc and return itself" do
+    expected = nil
+    Some(value).inside { |v| expected = v }.must_equal(Some(value))
+    expected.must_equal(value)
   end
 
   it "should wrap the creation of a Some" do

@@ -70,6 +70,11 @@ class SomeClass < OptionClass
   def filter(&blk)
     exists?(&blk) ? self : None
   end
+
+  def inside(&blk)
+    blk.call(get)
+    self
+  end
 end
 
 class NoneClass < OptionClass
@@ -119,6 +124,10 @@ class NoneClass < OptionClass
   end
 
   def filter(&blk)
+    self
+  end
+
+  def inside(&blk)
     self
   end
 end
