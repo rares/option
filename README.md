@@ -56,7 +56,7 @@ None.fold(-> { "missing" }) { |v| v.upcase } #=> missing
 foo.filter { |v| v == "baz" } #=> None
 
 # mutation
-foo.inside { |v| v.upcase } #=> Some("BAR")
+foo.inside { |v| v.upcase! } #=> Some("BAR")
 ```
 
 ## Build Status
