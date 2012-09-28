@@ -60,7 +60,10 @@ foo.inside { |v| v.upcase } #=> Some("BAR")
 ```
 
 ## Build Status
-<a href="http://travis-ci.org/rares/option">![http://travis-ci.org/rares/option](https://secure.travis-ci.org/rares/option.png)</a>
+[![Travis CI](https://secure.travis-ci.org/rares/option.png)](http://travis-ci.org/rares/option)
+
+## Code Climate
+[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/rares/option)
 
 ## Contributing
 
