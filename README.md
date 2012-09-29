@@ -1,6 +1,6 @@
 # Option
 
-A Ruby port os Scala's Option monad. Tries to be faithful
+A Ruby port of Scala's Option monad. Tries to be faithful
 but also pragmatic in RE: to ducktyping.
 
 ## Installation
