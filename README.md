@@ -1,7 +1,9 @@
 # Option
 
 A Ruby port of Scala's Option monad. Tries to be faithful
-but also pragmatic in RE: to ducktyping.
+but also pragmatic in RE: to duck typing.
+
+Blog post: http://robares.com/2012/09/16/ruby-port-of-scala-option/
 
 ## Installation
 
