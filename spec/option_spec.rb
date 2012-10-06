@@ -9,7 +9,7 @@ module MiniTest::Assertions
     assert (option.is_a?(Some) && option.or_nil == value), "Expected Some(#{value})"
   end
 
-  def assert_none(option)
+  def assert_none(_, option)
     assert option === None, "Expected None"
   end
 end
