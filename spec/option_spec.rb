@@ -1,16 +1,17 @@
 require "minitest/autorun"
+require "minitest/pride"
 require "minitest/spec"
 
 require "option"
 
 module MiniTest::Assertions
 
-  def assert_some(value, option)
+  def assert_some(value, option, msg = nil)
     assert (option.is_a?(Some) && option.or_nil == value), "Expected Some(#{value})"
   end
 
-  def assert_none(_, option)
-    assert option === None, "Expected None"
+  def assert_none(value, option, msg = nil)
+    assert option == None, "Expected None"
   end
 end
 
