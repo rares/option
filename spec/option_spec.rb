@@ -73,6 +73,14 @@ describe NoneClass do
     None.inside { |v| expected = value }
     expected.must_be_nil
   end
+
+  it "#or_else should invoke the block and return an Option" do
+    None.or_else { Some(value) }.must_equal(Some(value))
+  end
+
+  it "#or_else should raise a TypeError if an Option is not returned" do
+    lambda { None.or_else { value } }.must_raise TypeError
+  end
 end
 
 describe SomeClass do
@@ -151,6 +159,10 @@ describe SomeClass do
     expected = nil
     Some(value).inside { |v| expected = v }.must_equal(Some(value))
     expected.must_equal(value)
+  end
+
+  it "#or_else should return itself" do
+    Some(value).or_else { None }.must_equal(Some(value))
   end
 
   it "should wrap the creation of a Some" do

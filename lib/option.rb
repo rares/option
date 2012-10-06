@@ -9,6 +9,15 @@ class OptionClass
       else or_nil == that
     end
   end
+
+  private
+
+  def return_option(result)
+    case result
+      when OptionClass then return result
+      else raise TypeError, "Must be an Option"
+    end
+  end
 end
 
 class SomeClass < OptionClass
@@ -52,11 +61,7 @@ class SomeClass < OptionClass
   end
 
   def flat_map(&blk)
-    result = blk.call(get)
-    case result
-      when OptionClass then return result
-      else raise TypeError, "Must be an Option"
-    end
+    return_option(blk.call(get))
   end
 
   def fold(if_empty, &blk)
@@ -73,6 +78,10 @@ class SomeClass < OptionClass
 
   def inside(&blk)
     blk.call(get)
+    self
+  end
+
+  def or_else(&blk)
     self
   end
 end
@@ -129,6 +138,10 @@ class NoneClass < OptionClass
 
   def inside(&blk)
     self
+  end
+
+  def or_else(&blk)
+    return_option(blk.call)
   end
 end
 
