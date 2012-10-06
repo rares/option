@@ -3,6 +3,20 @@ require "minitest/spec"
 
 require "option"
 
+module MiniTest::Assertions
+
+  def assert_some(value, option)
+    assert (option.is_a?(Some) && option.or_nil == value), "Expected Some(#{value})"
+  end
+
+  def assert_none(option)
+    assert option === None, "Expected None"
+  end
+end
+
+OptionClass.infect_an_assertion :assert_some, :must_be_some
+OptionClass.infect_an_assertion :assert_none, :must_be_none
+
 def value
   12
 end
@@ -41,11 +55,11 @@ describe NoneClass do
   end
 
   it "#map should return itself" do
-    None.map {}.must_equal(None)
+    None.map {}.must_be_none
   end
 
   it "#flat_map should return itself" do
-    None.flat_map {}.must_equal(None)
+    None.flat_map {}.must_be_none
   end
 
   it "#exists? should return false" do
@@ -57,11 +71,11 @@ describe NoneClass do
   end
 
   it "#filter with a true predicate returns itself" do
-    Option(value).filter { |i| i == 12 }.must_equal(Option(value))
+    Option(value).filter { |i| i == 12 }.must_be_some(value)
   end
 
   it "#filter with a false predicate returns None" do
-    Option(value).filter { |i| i == 1 }.must_equal(None)
+    Option(value).filter { |i| i == 1 }.must_be_none
   end
 
   it "should be aliased to None" do
@@ -75,7 +89,7 @@ describe NoneClass do
   end
 
   it "#or_else should invoke the block and return an Option" do
-    None.or_else { Some(value) }.must_equal(Some(value))
+    None.or_else { Some(value) }.must_be_some(value)
   end
 
   it "#or_else should raise a TypeError if an Option is not returned" do
@@ -124,7 +138,7 @@ describe SomeClass do
   end
 
   it "#map should return the result of the proc over the value in an Option" do
-    Some(value).map { |v| v * 2 }.must_equal(Some(24))
+    Some(value).map { |v| v * 2 }.must_be_some(24)
   end
 
   it "#flat_map should raise TypeError if the returned value is not an Option" do
@@ -132,11 +146,11 @@ describe SomeClass do
   end
 
   it "#flat_map should return an Option value from the block" do
-    Some(value).flat_map { |v| Option(v * 2) }.must_equal(Some(24))
+    Some(value).flat_map { |v| Option(v * 2) }.must_be_some(24)
   end
 
   it "#flat_map can return None from the block" do
-    Some(value).flat_map { |_| None }.must_equal(None)
+    Some(value).flat_map { |_| None }.must_be_none
   end
 
   it "#exists? should return true when the block evaluates true" do
@@ -152,17 +166,17 @@ describe SomeClass do
   end
 
   it "#filter should return itself" do
-    None.filter { |i| i == 0 }.must_equal(None)
+    None.filter { |i| i == 0 }.must_be_none
   end
 
   it "#inside should invoke the proc and return itself" do
     expected = nil
-    Some(value).inside { |v| expected = v }.must_equal(Some(value))
+    Some(value).inside { |v| expected = v }.must_be_some(value)
     expected.must_equal(value)
   end
 
   it "#or_else should return itself" do
-    Some(value).or_else { None }.must_equal(Some(value))
+    Some(value).or_else { None }.must_be_some(value)
   end
 
   it "should wrap the creation of a Some" do
@@ -170,18 +184,18 @@ describe SomeClass do
   end
 
   it "should be aliased to Some" do
-    Some.new(value).must_equal(Some(value))
+    Some.new(value).must_be_some(value)
   end
 end
 
 describe OptionClass do
 
   it "must return a some if the passed value is not nil" do
-    Option(value).must_equal(Some(value))
+    Option(value).must_be_some(value)
   end
 
   it "must return a None if the passed value is nil" do
-    Option(nil).must_equal(None)
+    Option(nil).must_be_none
   end
 
   it "should do equality checks against the boxed value" do
