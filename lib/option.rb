@@ -12,7 +12,7 @@ class OptionClass
 
   private
 
-  def return_option(result)
+  def assert_option(result)
     case result
       when OptionClass then return result
       else raise TypeError, "Must be an Option"
@@ -61,7 +61,7 @@ class SomeClass < OptionClass
   end
 
   def flat_map(&blk)
-    return_option(blk.call(get))
+    assert_option(blk.call(get))
   end
 
   def fold(if_empty, &blk)
@@ -141,7 +141,7 @@ class NoneClass < OptionClass
   end
 
   def or_else(&blk)
-    return_option(blk.call)
+    assert_option(blk.call)
   end
 end
 
