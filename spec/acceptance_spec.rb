@@ -8,17 +8,17 @@ describe "Option" do
 
   describe "when applying the 3 monadic axioms" do
 
-    describe "identity" do
+    describe "left identity" do
 
       it "obeys (return x) >>= f == f x" do
-        some.flat_map { |v| Some(v) }.must_equal(some)
+        some.flat_map(&upcase).must_equal(upcase.call(some.get))
       end
     end
 
-    describe "unit" do
+    describe "right identity" do
 
       it "obeys m >>= return == m" do
-        some.flat_map(&upcase).must_equal(upcase.call(some.get))
+        some.flat_map { |v| Some(v) }.must_equal(some)
       end
     end
 
