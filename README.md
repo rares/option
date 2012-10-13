@@ -59,6 +59,11 @@ foo.filter { |v| v == "baz" } #=> None
 
 # Side-effects
 foo.inside { |v| v.upcase! } #=> Some("BAR")
+
+# use in a for loop
+for value in foo
+  puts value #=> bar
+end
 ```
 
 ## Build Status
