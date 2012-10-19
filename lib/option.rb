@@ -57,7 +57,7 @@ class SomeClass < OptionClass
   end
 
   def map(&blk)
-    Option(blk.call(get))
+    Some(blk.call(get))
   end
 
   def flat_map(&blk)
