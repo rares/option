@@ -116,7 +116,7 @@ describe SomeClass do
     Some(value).empty?.must_equal(false)
   end
 
-  it "#map should return the result of the proc over the value in an Option" do
+  it "#map should return the result of the proc over the value in a Some" do
     Some(value).map { |v| v * 2 }.must_be_some(24)
   end
 
