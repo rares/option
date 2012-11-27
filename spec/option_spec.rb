@@ -74,6 +74,10 @@ describe NoneClass do
   it "#or_else should raise a TypeError if an Option is not returned" do
     lambda { None.or_else { value } }.must_raise TypeError
   end
+
+  it "#flatten should return itself" do
+    None.flatten.must_be_none
+  end
 end
 
 describe SomeClass do
@@ -164,6 +168,10 @@ describe SomeClass do
 
   it "should be aliased to Some" do
     Some.new(value).must_be_some(value)
+  end
+
+  it "#flatten" do
+    Some(Some(Some(value))).flatten.must_be_some(value)
   end
 end
 

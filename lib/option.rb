@@ -84,6 +84,13 @@ class SomeClass < OptionClass
   def or_else(&blk)
     self
   end
+
+  def flatten
+    case get
+      when OptionClass then get.flatten
+      else self
+    end
+  end
 end
 
 class NoneClass < OptionClass
@@ -142,6 +149,10 @@ class NoneClass < OptionClass
 
   def or_else(&blk)
     assert_option(blk.call)
+  end
+
+  def flatten
+    self
   end
 end
 
