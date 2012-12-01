@@ -173,7 +173,7 @@ describe SomeClass do
   it "#flatten" do
     inner_value = Some(Some(Some(value))).flatten
     inner_value.must_be_some(value)
-    inner_value.or_nil == value
+    inner_value.or_nil.must_equal(value)
   end
 end
 
