@@ -72,6 +72,10 @@ class SomeClass < OptionClass
     !! blk.call(get)
   end
 
+  def include?(value)
+    get == value
+  end
+
   def filter(&blk)
     exists?(&blk) ? self : None
   end
@@ -136,6 +140,10 @@ class NoneClass < OptionClass
   end
 
   def exists?(&blk)
+    false
+  end
+
+  def include?(value)
     false
   end
 

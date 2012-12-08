@@ -45,6 +45,10 @@ describe NoneClass do
     None.exists? {}.must_equal(false)
   end
 
+  it "#include? should return false" do
+    None.include?(value).must_equal(false)
+  end
+
   it "#fold should invoke the default proc" do
     None.fold(proc { value }) { |v| v.to_f }.must_equal(value)
   end
@@ -142,6 +146,14 @@ describe SomeClass do
 
   it "#exists? should return false when the block evaluates false" do
     Some(value).exists? { |v| v % 2 != 0 }.must_equal(false)
+  end
+
+  it "#include? should return true when the passed value and the boxed value are the same" do
+    Some(value).include?(value).must_equal(true)
+  end
+
+  it "#include? should return false when the passed value and the boxed value are not the same" do
+    Some(value).include?(value + 1).must_equal(false)
   end
 
   it "#fold should map the proc over the value and return it" do
