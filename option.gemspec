@@ -15,6 +15,9 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Option::VERSION
 
+  gem.signing_key   = "/Volumes/External/gem-private_key.pem"
+  gem.cert_chain    = ["gem-public_cert.pem"]
+
   gem.add_development_dependency "rake",     "= 0.9.2.2"
   gem.add_development_dependency "minitest", "= 3.4.0"
 end
