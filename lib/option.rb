@@ -10,6 +10,7 @@ class OptionClass
     end
   end
 
+
   private
 
   def assert_option(result)
@@ -98,6 +99,14 @@ class SomeClass < OptionClass
 end
 
 class NoneClass < OptionClass
+
+  def dup
+    raise TypeError, "can't dup NoneClass"
+  end
+
+  def clone
+    raise TypeError, "can't clone NoneClass"
+  end
 
   def to_a
     []

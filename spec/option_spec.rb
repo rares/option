@@ -2,6 +2,14 @@ require "spec_helper"
 
 describe NoneClass do
 
+  it "#dup results in a TypeError" do
+    lambda { None.dup }.must_raise TypeError
+  end
+
+  it "#clone results in a TypeError" do
+    lambda { None.clone }.must_raise TypeError
+  end
+
   it "#to_a returns an empty array" do
     None.to_a.must_equal([])
   end
