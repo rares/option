@@ -70,7 +70,7 @@ end
 [![Travis CI](https://secure.travis-ci.org/rares/option.png)](http://travis-ci.org/rares/option)
 
 ## Code Climate
-[![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/rares/option)
+[![Code Climate](https://codeclimate.com/github/rares/option.png)](https://codeclimate.com/github/rares/option)
 
 ## Contributing
 
