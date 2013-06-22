@@ -90,6 +90,10 @@ describe NoneClass do
   it "#flatten should return itself" do
     None.flatten.must_be_none
   end
+
+  it "#error should raise a RuntimeError with the given message" do
+    lambda { None.error("error") }.must_raise RuntimeError, "error"
+  end
 end
 
 describe SomeClass do
@@ -194,6 +198,11 @@ describe SomeClass do
     inner_value = Some(Some(Some(value))).flatten
     inner_value.must_be_some(value)
     inner_value.or_nil.must_equal(value)
+  end
+
+  it "#error should return the Some" do
+    value = !!(Some(value).error("error") rescue false)
+    value.must_equal true
   end
 end
 

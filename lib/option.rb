@@ -10,7 +10,6 @@ class OptionClass
     end
   end
 
-
   private
 
   def assert_option(result)
@@ -96,6 +95,10 @@ class SomeClass < OptionClass
       else self
     end
   end
+
+  def error(message)
+    self
+  end
 end
 
 class NoneClass < OptionClass
@@ -170,6 +173,10 @@ class NoneClass < OptionClass
 
   def flatten
     self
+  end
+
+  def error(message)
+    raise RuntimeError.new(message)
   end
 end
 
