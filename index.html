@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Option : Ruby implementation of Scala's Option Monad" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Option</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/rares/option">View on GitHub</a>
+
+          <h1 id="project_title">Option</h1>
+          <h2 id="project_tagline">Ruby implementation of Scala's Option Monad</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/rares/option/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/rares/option/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="option" class="anchor" href="#option"><span class="octicon octicon-link"></span></a>Option</h1>
+
+<p>A Ruby port of Scala's Option monad. Tries to be faithful
+but also pragmatic in RE: to duck typing.</p>
+
+<p>Blog post: <a href="http://robares.com/2012/09/16/ruby-port-of-scala-option/">http://robares.com/2012/09/16/ruby-port-of-scala-option/</a></p>
+
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Add this line to your application's Gemfile:</p>
+
+<pre><code>gem 'option'
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre><code>$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre><code>$ gem install option
+</code></pre>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>Generally, you want to use the Option(A) wrapper method to box
+your value. This will make the right decision as to what your initial
+value should be:</p>
+
+<div class="highlight highlight-ruby"><pre><span class="n">foo</span> <span class="o">=</span> <span class="no">Option</span><span class="p">(</span><span class="s2">"bar"</span><span class="p">)</span>
+</pre></div>
+
+<p>This will allow you to now manipulate the value in the box via various means:</p>
+
+<div class="highlight highlight-ruby"><pre>
+<span class="c1"># get the value</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">get</span> <span class="c1">#=&gt; "bar"</span>
+
+<span class="c1"># return a default if the box is None</span>
+<span class="no">None</span><span class="o">.</span><span class="n">get_or_else</span> <span class="p">{</span> <span class="s2">"default"</span> <span class="p">}</span> <span class="c1">#=&gt; "default"</span>
+
+<span class="c1"># map the value to another option</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span><span class="o">.</span><span class="n">upcase</span> <span class="p">}</span> <span class="c1">#=&gt; Some("BAR")</span>
+
+<span class="c1"># does the value meet a requirement?</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">exists?</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span> <span class="o">==</span> <span class="s2">"bar"</span> <span class="p">}</span> <span class="c1">#=&gt; true</span>
+
+<span class="c1"># return the value or nil depending on the state</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">or_nil</span> <span class="c1">#=&gt; "bar"</span>
+
+<span class="c1"># chain values</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span><span class="o">.</span><span class="n">upcase</span> <span class="p">}</span><span class="o">.</span><span class="n">get_or_else</span> <span class="p">{</span> <span class="s2">"missing"</span> <span class="p">}</span> <span class="c1">#=&gt; BARBAR</span>
+
+<span class="c1"># attempt to extract a value but default if None</span>
+<span class="no">None</span><span class="o">.</span><span class="n">fold</span><span class="p">(</span><span class="o">-&gt;</span> <span class="p">{</span> <span class="s2">"missing"</span> <span class="p">})</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span><span class="o">.</span><span class="n">upcase</span> <span class="p">}</span> <span class="c1">#=&gt; missing</span>
+
+<span class="c1"># filter values returning an option</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">filter</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span> <span class="o">==</span> <span class="s2">"baz"</span> <span class="p">}</span> <span class="c1">#=&gt; None</span>
+
+<span class="c1"># Side-effects</span>
+<span class="n">foo</span><span class="o">.</span><span class="n">inside</span> <span class="p">{</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span> <span class="n">v</span><span class="o">.</span><span class="n">upcase!</span> <span class="p">}</span> <span class="c1">#=&gt; Some("BAR")</span>
+
+<span class="c1"># use in a for loop</span>
+<span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">foo</span>
+  <span class="nb">puts</span> <span class="n">value</span> <span class="c1">#=&gt; bar</span>
+<span class="k">end</span>
+</pre></div>
+
+<h2>
+<a name="build-status" class="anchor" href="#build-status"><span class="octicon octicon-link"></span></a>Build Status</h2>
+
+<p><a href="http://travis-ci.org/rares/option"><img src="https://secure.travis-ci.org/rares/option.png" alt="Travis CI"></a></p>
+
+<h2>
+<a name="code-climate" class="anchor" href="#code-climate"><span class="octicon octicon-link"></span></a>Code Climate</h2>
+
+<p><a href="https://codeclimate.com/github/rares/option"><img src="https://codeclimate.com/github/rares/option.png" alt="Code Climate"></a></p>
+
+<h2>
+<a name="contributing" class="anchor" href="#contributing"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+<ol>
+<li>Fork it</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Implement your feature. Patches not considered without accompanying tests.<br>
+</li>
+<li>Commit your changes (<code>git commit -am 'Added some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create new Pull Request</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Option maintained by <a href="https://github.com/rares">rares</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
