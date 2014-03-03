@@ -96,7 +96,7 @@ class SomeClass < OptionClass
     end
   end
 
-  def error(message)
+  def error(*argv)
     self
   end
 end
@@ -175,8 +175,8 @@ class NoneClass < OptionClass
     self
   end
 
-  def error(message)
-    raise RuntimeError.new(message)
+  def error(*argv)
+    argv.empty? ? raise : raise(*argv)
   end
 end
 

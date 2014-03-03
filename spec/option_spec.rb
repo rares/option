@@ -94,6 +94,14 @@ describe NoneClass do
   it "#error should raise a RuntimeError with the given message" do
     lambda { None.error("error") }.must_raise RuntimeError, "error"
   end
+
+  it "#error should raise the error passed to it" do
+    -> { None.error(ArgumentError.new("name")) }.must_raise ArgumentError, "name"
+  end
+
+  it "should assemble an Error from the arguments passed in" do
+    -> { None.error(StandardError, "this is a problem") }.must_raise StandardError, "this is a problem"
+  end
 end
 
 describe SomeClass do
