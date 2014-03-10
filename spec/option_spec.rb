@@ -102,6 +102,10 @@ describe NoneClass do
   it "should assemble an Error from the arguments passed in" do
     lambda { None.error(StandardError, "this is a problem") }.must_raise StandardError, "this is a problem"
   end
+
+  it "cannot be typed" do
+    lambda { None[String] }.must_raise TypeError, "can't specify a type of NoneClass"
+  end
 end
 
 describe SomeClass do
@@ -212,6 +216,16 @@ describe SomeClass do
     value = !!(Some(value).error("error") rescue false)
     value.must_equal true
   end
+
+  it "can be typed" do
+    opt = Some[String]
+    opt.class.must_equal OptionHelpers::OptionType
+    opt.type.must_equal String
+  end
+
+  it "must be typed using a class, not a value" do
+    lambda { Some[5] }.must_raise TypeError, "Must be a Class"
+  end
 end
 
 describe OptionClass do
@@ -226,5 +240,44 @@ describe OptionClass do
 
   it "should do equality checks against the boxed value" do
     Option(value).must_equal(value)
+  end
+
+  it "allows matching typed options" do
+    Option(5).match do |matcher|
+      matcher.case(Some[Fixnum]) { |val| val * 2 }
+      matcher.case(Some[String]) { |val| "bar" }
+    end.must_equal 10
+
+    Option("foo").match do |matcher|
+      matcher.case(Some[Fixnum]) { |val| val * 2 }
+      matcher.case(Some[String]) { |val| "bar" }
+    end.must_equal "bar"
+  end
+
+  it "allows matching untyped options" do
+    Option(5).match do |matcher|
+      matcher.case(Some) { |val| val * 2 }
+    end.must_equal 10
+  end
+
+  it "allows matching on none" do
+    None.match do |matcher|
+      matcher.case(None) { "none" }
+    end.must_equal "none"
+  end
+
+  it "allows matching with an else block" do
+    Option(5).match do |matcher|
+      matcher.case(Some[String]) { |val| "bar" }
+      matcher.else { |val| val.get * 2}
+    end.must_equal 10
+  end
+
+  it "does not allow matching against non-option types" do
+    lambda do
+      Option(5).match do |matcher|
+        matcher.case(Fixnum) { 1 }
+      end
+    end.must_raise TypeError, "can't match an Option against a Fixnum"
   end
 end
