@@ -82,4 +82,4 @@ end
 6. Create new Pull Request
 
 ## License
-[![MIT License](http://rares.mit-license.org/)](http://rares.mit-license.org/)
+http://rares.mit-license.org/
