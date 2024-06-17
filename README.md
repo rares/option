@@ -3,8 +3,6 @@
 A Ruby port of Scala's Option monad. Tries to be faithful
 but also pragmatic in RE: to duck typing.
 
-Blog post: http://robares.com/2012/09/16/ruby-port-of-scala-option/
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -65,12 +63,6 @@ for value in foo
   puts value #=> bar
 end
 ```
-
-## Build Status
-[![Travis CI](https://secure.travis-ci.org/rares/option.png)](http://travis-ci.org/rares/option)
-
-## Code Climate
-[![Code Climate](https://codeclimate.com/github/rares/option.png)](https://codeclimate.com/github/rares/option)
 
 ## Contributing
 
