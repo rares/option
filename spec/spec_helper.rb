@@ -2,9 +2,9 @@ require "minitest/autorun"
 require "minitest/pride"
 require "minitest/spec"
 
-require "option"
+require_relative "../lib/option"
 
-module MiniTest::Assertions
+module Minitest::Assertions
 
   def assert_some(value, option, msg = nil)
     assert (option.is_a?(Some) && option.or_nil == value), "Expected Some(#{value})"
@@ -18,6 +18,6 @@ end
 OptionClass.infect_an_assertion :assert_some, :must_be_some
 OptionClass.infect_an_assertion :assert_none, :must_be_none
 
-def value
+def subject_value
   12
 end
