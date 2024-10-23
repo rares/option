@@ -1,6 +1,73 @@
+module OptionHelpers
+  class OptionMatcher
+    attr_reader :return_value
+
+    def initialize(option)
+      @option = option
+      @return_value = nil
+    end
+
+    def case(type)
+      if type.is_a?(OptionType)
+        if @option.present?
+          option_val = @option.get
+          if option_val.is_a?(type.type)
+            @return_value = yield(option_val)
+          end
+        end
+      elsif type == SomeClass
+        if @option.present?
+          @return_value = yield(@option.get)
+        end
+      elsif type.is_a?(NoneClass)
+          if !@option.present?
+            @return_value = yield(@option)
+          end
+      else
+        raise TypeError, "can't match an Option against a #{type.to_s}"
+      end
+    end
+
+    def else
+      @return_value = yield(@option)
+    end
+  end
+
+  class OptionType
+    attr_reader :type
+
+    def initialize(type)
+      @type = type
+    end
+
+    class << self
+      def for_class(klass)
+        case klass
+          when Class
+            option_type_cache[klass] ||= OptionType.new(klass)
+          else
+            raise TypeError, "Must be a Class"
+        end
+      end
+
+      private
+
+      def option_type_cache
+        @option_type_cache ||= {}
+      end
+    end
+  end
+end
+
 class OptionClass
 
   def or_nil
+  end
+
+  class << self
+    def [](type)
+      OptionHelpers::OptionType.for_class(type)
+    end
   end
 
   def ==(that)
@@ -8,6 +75,12 @@ class OptionClass
       when OptionClass then or_nil == that.or_nil
       else or_nil == that
     end
+  end
+
+  def match
+    matcher = OptionHelpers::OptionMatcher.new(self)
+    yield matcher
+    matcher.return_value
   end
 
   private
@@ -102,6 +175,9 @@ class SomeClass < OptionClass
 end
 
 class NoneClass < OptionClass
+  def [](type)
+    raise TypeError, "can't specify a type of NoneClass"
+  end
 
   def dup
     raise TypeError, "can't dup NoneClass"
@@ -187,6 +263,6 @@ def Some(value)
   SomeClass.new(value)
 end
 
-def Option(value)
+def Option(value=nil)
   value.nil? ? None : Some(value)
 end
