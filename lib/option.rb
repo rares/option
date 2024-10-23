@@ -44,6 +44,11 @@ class SomeClass < OptionClass
     nil
   end
 
+  def thread(*funcs)
+    return self unless funcs.length > 0
+    Option(funcs.shift.to_proc.call(get)).thread(*funcs)
+  end
+
   def or_nil
     get
   end
@@ -129,6 +134,10 @@ class NoneClass < OptionClass
 
   def or_nil
     nil
+  end
+
+  def thread(*funcs)
+    self
   end
 
   def present?

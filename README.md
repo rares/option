@@ -62,6 +62,10 @@ foo.inside { |v| v.upcase! } #=> Some("BAR")
 for value in foo
   puts value #=> bar
 end
+
+# Thread an option through multiple methods
+Option(" 1 ").thread(:strip, :to_i, :next).get #=> 2
+Option(" 1 ").thread(:strip, :to_i, :next).get_or_else { "else" } #=> else
 ```
 
 ## Contributing
